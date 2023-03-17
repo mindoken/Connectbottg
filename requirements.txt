@@ -1,5 +1,2 @@
 python-telegram-bot
 sqlalchemy
-bs4
-requests
-pytube
