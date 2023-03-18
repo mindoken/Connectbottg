@@ -338,8 +338,11 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
             chatting_result=""
 
         form=f'Твоя анкета: \n{networking_result} {friendship_result} {relationship_result} {help_result} {chatting_result}\n{name_result},{age_result},{faculty_result}\n {bio_result}'
-        await context.bot.send_message(chat_id=update.effective_chat.id,text=form)
-        if name_result!="":
-            await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path)
+        
+        if name_result=="":
+            await context.bot.send_message(chat_id=update.effective_chat.id,text=form)
+        else:
+            await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path,caption=form)
+
     
     return ConversationHandler.END

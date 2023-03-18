@@ -10,7 +10,6 @@ GENDER, NAME, AGE, FACULTY,NETWORKING,FRIENDSHIP, RELATIONSHIP, HELP, CHATTING ,
 DELETE_FORM= range(1)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Добро пожаловать в бота для Нетворкинга и знакомств ConnectBot!\n Чтобы создать анкету, напиши /create_form \nЧтобы посмотреть все доступные команды, напиши /help")
 
 async def create_form(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -191,7 +190,6 @@ async def set_chatting(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def set_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     photo_file = await update.message.photo[-1].get_file()
     photo_path = Path("photo",f'{update.effective_chat.id}.jpg')
-    #photo_path= f'photo\user_photo{update.effective_chat.id}.jpg'
     await photo_file.download_to_drive(photo_path)
     user_photo = f'{update.effective_chat.id}.jpg'
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_user.id).values(photo = user_photo)
@@ -299,9 +297,12 @@ async def show_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
         chatting_result=""
 
     form=f'Твоя анкета: \n{networking_result} {friendship_result} {relationship_result} {help_result} {chatting_result}\n{name_result},{age_result},{faculty_result}\n {bio_result}'
-    await context.bot.send_message(chat_id=update.effective_chat.id,text=form)
-    if name_result!="":
-        await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path)
+    
+    if name_result=="":
+        await context.bot.send_message(chat_id=update.effective_chat.id,text=form)
+    else:
+        await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path,caption=form)
+        
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
