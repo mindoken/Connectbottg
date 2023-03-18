@@ -5,18 +5,18 @@ from update import set_update_gender,set_update_age,set_update_bio,set_update_ch
 from search import search_form,reply_form
 from utils import GENDER, NAME, AGE, FACULTY,NETWORKING,FRIENDSHIP, RELATIONSHIP, HELP, CHATTING ,PHOTO, BIO,DELETE_FORM
 from update import SHOW_FORM,UPDATE
-from search import SEARCH,REPLY
+from search import REPLY
 from telegram import *
 from telegram.ext import ApplicationBuilder, CommandHandler,ConversationHandler,MessageHandler,filters
 import db
 
 def Run():
-    exec("db")
-    application = ApplicationBuilder().token('6207411726:AAGTkgz8niKVarLEqwj4mbpE7MfXEFJLC1Q').build()
+    exec("db") #запуск БД
+    application = ApplicationBuilder().token('6207411726:AAGTkgz8niKVarLEqwj4mbpE7MfXEFJLC1Q').build() #запуск бота по токену
 
-    start_handler = CommandHandler('start', start)
+    start_handler = CommandHandler('start', start) #стартовая команда для бота
 
-    create_form_handler = ConversationHandler(
+    create_form_handler = ConversationHandler( #создание диалоговой формы для создание анкеты
         entry_points=[CommandHandler('create_form', create_form)],
         states={
             GENDER:[MessageHandler(filters.TEXT,set_gender)],
@@ -34,9 +34,9 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)],
         )
     
-    show_form_handler = CommandHandler('show_form',show_form)
+    show_form_handler = CommandHandler('show_form',show_form) #команда для показывания собственной анкеты
 
-    delete_form_handler = ConversationHandler(
+    delete_form_handler = ConversationHandler( #создание диалоговой формы для удаления анкеты
         entry_points=[CommandHandler('delete_form',delete_form)],
         states={
             DELETE_FORM:[MessageHandler(filters.TEXT,delete_form_end)]
@@ -44,7 +44,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)],
         )
 
-    update_gender_handler = ConversationHandler(
+    update_gender_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "пол"
         entry_points=[CommandHandler('update_gender',update_gender)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_gender)],
@@ -53,7 +53,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_age_handler = ConversationHandler(
+    update_age_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "возраст"
         entry_points=[CommandHandler('update_age',update_age)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_age)],
@@ -62,7 +62,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_name_handler = ConversationHandler(
+    update_name_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "имя"
         entry_points=[CommandHandler('update_name',update_name)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_name)],
@@ -71,7 +71,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_faculty_handler = ConversationHandler(
+    update_faculty_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "факультет"
         entry_points=[CommandHandler('update_faculty',update_faculty)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_faculty)],
@@ -80,7 +80,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_networking_handler = ConversationHandler(
+    update_networking_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "нетворкинг"
         entry_points=[CommandHandler('update_networking',update_networking)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_networking)],
@@ -89,7 +89,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_friendship_handler = ConversationHandler(
+    update_friendship_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "дружба"
         entry_points=[CommandHandler('update_friendship',update_friendship)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_friendship)],
@@ -98,7 +98,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_relationship_handler = ConversationHandler(
+    update_relationship_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "отношения"
         entry_points=[CommandHandler('update_relationship',update_relationship)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_relationship)],
@@ -107,7 +107,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_help_handler = ConversationHandler(
+    update_help_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "помощь"
         entry_points=[CommandHandler('update_help',update_help)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_help)],
@@ -116,7 +116,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_chatting_handler = ConversationHandler(
+    update_chatting_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "общение"
         entry_points=[CommandHandler('update_chatting',update_chatting)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_chatting)],
@@ -125,7 +125,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    update_photo_handler = ConversationHandler(
+    update_photo_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "фото"
         entry_points=[CommandHandler('update_photo',update_photo)],
         states={
             UPDATE:[MessageHandler(filters.PHOTO,set_update_photo)],
@@ -134,7 +134,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     ) 
 
-    update_bio_handler = ConversationHandler(
+    update_bio_handler = ConversationHandler( #создание диалоговой формы для обновления данных в части "о себе"
         entry_points=[CommandHandler('update_bio',update_bio)],
         states={
             UPDATE:[MessageHandler(filters.TEXT,set_update_bio)],
@@ -143,7 +143,7 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    search_form_handler = ConversationHandler(
+    search_form_handler = ConversationHandler( #создание диалоговой формы для просмотра чужой анкеты
         entry_points=[CommandHandler('search_form',search_form)],
         states={
             REPLY:[MessageHandler(filters.TEXT & ~filters.COMMAND,reply_form)]
@@ -151,7 +151,9 @@ def Run():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    help_handler = CommandHandler('help',help)
+    help_handler = CommandHandler('help',help) #команда выводящая все доступные пользователю действия
+
+#данный блок посвящен добавлению команд в бота для их определения после отправки команды
 
     application.add_handler(start_handler)
     application.add_handler(create_form_handler)

@@ -5,83 +5,83 @@ from db import members,connection
 from pathlib import Path
 from random import randint
 
-SEARCH,REPLY =range(2)
-search_form_id1=" "
+REPLY =range(1)
+search_form_id1=" " # переменная с помощью которой мы будем отсылать свою заявку другому пользователю
 
 async def search_form(update:Update,context:ContextTypes.DEFAULT_TYPE):
-    out_of_stock= db.select(db.func.count()).select_from(members).where(members.columns.tg_chat_id != update.effective_chat.id)
-    count =connection.execute(out_of_stock)
+    out_of_stock= db.select(db.func.count()).select_from(members).where(members.columns.tg_chat_id != update.effective_chat.id) #создание запроса подсчета всех анкет кроме текущего пользователя
+    count =connection.execute(out_of_stock) #выполнение запроса
     count=int(count.fetchall()[0][0])
     print(count)
 
-    select_query= db.select(members.columns.tg_chat_id).where(members.columns.tg_chat_id != update.effective_chat.id)
-    select_result=connection.execute(select_query)
+    select_query= db.select(members.columns.tg_chat_id).where(members.columns.tg_chat_id != update.effective_chat.id) #создание запроса поиска всех анкет кроме текущего пользователя
+    select_result=connection.execute(select_query) #выполнение запроса
     print(randint(0,count-1))
-    number= randint(0,count-1)
-    search_form_id=str(select_result.fetchall()[number][0])
-    global search_form_id1
-    search_form_id1= search_form_id
+    number= randint(0,count-1) #выбор рандомного числа
+    search_form_id=str(select_result.fetchall()[number][0]) #запись ключа выбранной анкеты
+    global search_form_id1 #вызов глобальной переменной
+    search_form_id1= search_form_id #присваивание глобальной переменной значения ключа
 
-    select_query= db.select( members.columns.name ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.name ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты 
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     name_result=str(select_result.fetchall()[0][0])
 
-    select_query= db.select( members.columns.age ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.age ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     age_result=str(select_result.fetchall()[0][0])
 
-    select_query= db.select( members.columns.faculty ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.faculty ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     faculty_result=str(select_result.fetchall()[0][0])
 
-    select_query= db.select( members.columns.bio ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.bio ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     bio_result=str(select_result.fetchall()[0][0])
 
-    select_query= db.select( members.columns.photo ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.photo ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     photo_path=(select_result.fetchall()[0][0])
     photo_path = Path("photo",photo_path)
 
-    select_query= db.select( members.columns.networking ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.networking ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     if select_result.fetchall()[0][0]==True:
         networking_result="Нетворкинг"
     else:
         networking_result=""
 
-    select_query= db.select( members.columns.friendship ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.friendship ).where(members.columns.tg_chat_id == search_form_id) #создание запроса поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     if select_result.fetchall()[0][0]==True:
         friendship_result="Дружба"
     else:
         friendship_result=""
 
-    select_query= db.select( members.columns.relationship ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.relationship ).where(members.columns.tg_chat_id == search_form_id) #создание поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     if select_result.fetchall()[0][0]==True:
         relationship_result="Отношения"
     else:
         relationship_result=""
 
-    select_query= db.select( members.columns.help ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+    select_query= db.select( members.columns.help ).where(members.columns.tg_chat_id == search_form_id) #создание поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     if select_result.fetchall()[0][0]==True:
         help_result="Помощь"
     else:
         help_result=""
 
-        select_query= db.select( members.columns.chatting ).where(members.columns.tg_chat_id == search_form_id)
-    select_result=connection.execute(select_query)
+        select_query= db.select( members.columns.chatting ).where(members.columns.tg_chat_id == search_form_id) #создание поиска данных выбранной анкеты
+    select_result=connection.execute(select_query) #выполнение запроса
     connection.commit()
     if select_result.fetchall()[0][0]==True:
         chatting_result="Общение"

@@ -2,15 +2,15 @@ import sqlalchemy as db
 #from sqlalchemy.orm import session,sessionmaker,mapper
 #from sqlalchemy.ext.declarative import declarative_base
 
-engine = db.create_engine('sqlite:///members-sqlalchemy.db')
+engine = db.create_engine('sqlite:///members-sqlalchemy.db') #создание БД
 
-connection = engine.connect()
+connection = engine.connect() #подключение к БД
 
 metadata = db.MetaData()
 
 #Base= declarative_base()
 
-members = db.Table('members',metadata,
+members = db.Table('members',metadata, #создание таблицы
     db.Column('tg_id',db.String),
     db.Column('gender',db.String),            
     db.Column('name',db.String),
