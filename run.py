@@ -1,11 +1,11 @@
-from utils import start, create_form, cancel, show_form,delete_form,delete_form_end,show_update_form
+from utils import start, create_form, cancel, show_form,delete_form,delete_form_end, help
 from utils import set_gender, set_age, set_chatting, set_faculty, set_friendship, set_help, set_name, set_networking, set_photo, set_relationship, set_bio
-from utils import update_gender,update_age,update_bio,update_chatting,update_faculty,update_friendship,update_help,update_name,update_networking,update_relationship
-from utils import set_update_gender,set_update_age,set_update_bio,set_update_chatting,set_update_faculty,set_update_friendship,set_update_help,set_update_name,set_update_networking,set_update_relationship
-from utils import GENDER, NAME, AGE, FACULTY,NETWORKING,FRIENDSHIP, RELATIONSHIP, HELP, CHATTING ,PHOTO, BIO
-from utils import DELETE_FORM,SHOW_FORM,UPDATE
-#from utils import UPDATE_GENDER,UPDATE_AGE
-#from utils import SHOW_NEW_GENDER,SHOW_NEW_AGE
+from update import update_gender,update_age,update_bio,update_chatting,update_faculty,update_friendship,update_help,update_name,update_networking,update_relationship,update_photo
+from update import set_update_gender,set_update_age,set_update_bio,set_update_chatting,set_update_faculty,set_update_friendship,set_update_help,set_update_name,set_update_networking,set_update_relationship,set_update_photo,show_update_form
+from search import search_form,reply_form
+from utils import GENDER, NAME, AGE, FACULTY,NETWORKING,FRIENDSHIP, RELATIONSHIP, HELP, CHATTING ,PHOTO, BIO,DELETE_FORM
+from update import SHOW_FORM,UPDATE
+from search import SEARCH,REPLY
 from telegram import *
 from telegram.ext import ApplicationBuilder, CommandHandler,ConversationHandler,MessageHandler,filters
 import db
@@ -29,7 +29,7 @@ def Run():
             HELP:[MessageHandler(filters.TEXT,set_help)],
             CHATTING:[MessageHandler(filters.TEXT,set_chatting)],
             PHOTO:[MessageHandler(filters.PHOTO,set_photo)],
-            BIO:[MessageHandler(filters.TEXT & ~filters.COMMAND, set_bio)]       
+            BIO:[MessageHandler(filters.TEXT & ~filters.COMMAND, set_bio)]      
         },
         fallbacks=[CommandHandler("cancel", cancel)],
         )
@@ -123,6 +123,15 @@ def Run():
             SHOW_FORM:[MessageHandler(filters.TEXT & ~filters.COMMAND,show_update_form)]
         },
         fallbacks=[CommandHandler("cancel", cancel)]
+    )
+
+    update_photo_handler = ConversationHandler(
+        entry_points=[CommandHandler('update_photo',update_photo)],
+        states={
+            UPDATE:[MessageHandler(filters.PHOTO,set_update_photo)],
+            SHOW_FORM:[MessageHandler(filters.TEXT & ~filters.COMMAND,show_update_form)]
+        },
+        fallbacks=[CommandHandler("cancel", cancel)]
     ) 
 
     update_bio_handler = ConversationHandler(
@@ -133,6 +142,16 @@ def Run():
         },
         fallbacks=[CommandHandler("cancel", cancel)]
     )
+
+    search_form_handler = ConversationHandler(
+        entry_points=[CommandHandler('search_form',search_form)],
+        states={
+            REPLY:[MessageHandler(filters.TEXT & ~filters.COMMAND,reply_form)]
+        },
+        fallbacks=[CommandHandler("cancel", cancel)]
+    )
+
+    help_handler = CommandHandler('help',help)
 
     application.add_handler(start_handler)
     application.add_handler(create_form_handler)
@@ -148,4 +167,7 @@ def Run():
     application.add_handler(update_help_handler)
     application.add_handler(update_chatting_handler)
     application.add_handler(update_bio_handler)
+    application.add_handler(update_photo_handler)
+    application.add_handler(search_form_handler)
+    application.add_handler(help_handler)
     application.run_polling()
