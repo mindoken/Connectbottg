@@ -1,4 +1,4 @@
-from utils import start, create_form, cancel, show_form,delete_form,delete_form_end, help
+from utils import start, create_form, cancel, show_form,delete_form,delete_form_end, help, audio
 from utils import set_gender, set_age, set_chatting, set_faculty, set_friendship, set_help, set_name, set_networking, set_photo, set_relationship, set_bio
 from update import update_gender,update_age,update_bio,update_chatting,update_faculty,update_friendship,update_help,update_name,update_networking,update_relationship,update_photo
 from update import set_update_gender,set_update_age,set_update_bio,set_update_chatting,set_update_faculty,set_update_friendship,set_update_help,set_update_name,set_update_networking,set_update_relationship,set_update_photo,show_update_form
@@ -150,6 +150,8 @@ def Run():
         },
         fallbacks=[CommandHandler("cancel", cancel)]
     )
+    
+    audio_handler = CommandHandler('audio',audio)
 
     help_handler = CommandHandler('help',help) #команда выводящая все доступные пользователю действия
 
