@@ -12,7 +12,7 @@ import db
 
 def Run():
     exec("db") #запуск БД
-    application = ApplicationBuilder().token('6207411726:AAGTkgz8niKVarLEqwj4mbpE7MfXEFJLC1Q').build() #запуск бота по токену
+    application = ApplicationBuilder().token('6278682112:AAFIfcMg8OPbTM_wh-Zj8fK59VN6WekxQjI').build() #запуск бота по токену
 
     start_handler = CommandHandler('start', start) #стартовая команда для бота
 
