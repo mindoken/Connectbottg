@@ -1,14 +1,10 @@
 import sqlalchemy as db
-#from sqlalchemy.orm import session,sessionmaker,mapper
-#from sqlalchemy.ext.declarative import declarative_base
 
 engine = db.create_engine('sqlite:///members-sqlalchemy.db') #создание БД
 
 connection = engine.connect() #подключение к БД
 
 metadata = db.MetaData()
-
-#Base= declarative_base()
 
 members = db.Table('members',metadata, #создание таблицы
     db.Column('tg_id',db.String),
@@ -26,9 +22,5 @@ members = db.Table('members',metadata, #создание таблицы
     db.Column('bio',db.String)         
 )
 
-#class Members(object):
-#    pass
-
-#mapper(Members,members)
 metadata.create_all(engine)
 connection.commit()
