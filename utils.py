@@ -310,6 +310,6 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE): #метод 
     help_text="Все команды установленные в боте:\n Создание анкеты /create_form \n Удаление анкеты /delete_form \n Показать свою анкету /show_form \n Поиск анкеты /search_form \n Отмена любой команды /cancel \n Обновление возраста /update_age \n Обновление имени /update_name \n Обновление фотографии /update_photo \n Обновление факультета /update_faculty \n Обновление статуса поиска нетворкинга /update_networking \n Обновление статуса поиска общения  /update_chatting \n Обновление статуса поиска дружбы /update_friendship \n Обновление статуса поиска отношений /update_relationship \n Обновление статуса поиска помощи /update_help \n Обновление описания профиля /update_bio \n Гимн данного бота /audio"
     await context.bot.send_message(chat_id=update.effective_chat.id,text=help_text)
 
-async def audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def audio(update: Update, context: ContextTypes.DEFAULT_TYPE): #метод вывода специального аудиофайла-пасхалки
   audio_path = Path('1.mp3')
   await context.bot.send_audio(chat_id=update.effective_chat.id,audio = audio_path)
