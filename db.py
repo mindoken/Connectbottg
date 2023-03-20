@@ -4,7 +4,7 @@ engine = db.create_engine('sqlite:///members-sqlalchemy.db') #создание �
 
 connection = engine.connect() #подключение к БД
 
-metadata = db.MetaData()
+metadata = db.MetaData() #содание контейнера метадата
 
 members = db.Table('members',metadata, #создание таблицы
     db.Column('tg_id',db.String),
@@ -22,5 +22,5 @@ members = db.Table('members',metadata, #создание таблицы
     db.Column('bio',db.String)         
 )
 
-metadata.create_all(engine)
-connection.commit()
+metadata.create_all(engine) #запуск БД
+connection.commit() #запасное сохранение БД
