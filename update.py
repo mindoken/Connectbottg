@@ -4,9 +4,9 @@ import sqlalchemy as db
 from db import members,connection,engine
 from pathlib import Path
 
-UPDATE,SHOW_FORM =range(2)
+UPDATE,SHOW_FORM =range(2) #создание переменных которые помогут для диалоговых окон в боте
 
-async def update_gender(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_gender(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения пола в анкете
     reply_keyboard = [["Парень", "Девушка", "Другое"]]
     await update.message.reply_text("Какой ваш пол?",
         reply_markup=ReplyKeyboardMarkup(
@@ -14,10 +14,10 @@ async def update_gender(update: Update,context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return UPDATE    
+    return UPDATE  #переход к следующему методу по плану диалогового окна
 
-async def set_update_gender(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_gender = update.message.text
+async def set_update_gender(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    user_gender = update.message.text #копирование сообщения пользователя
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(gender = user_gender) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -29,15 +29,15 @@ async def set_update_gender(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_age(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_age(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения возраста в анкете
     await context.bot.send_message(chat_id=update.effective_chat.id,text="Сколько вам лет?")
 
-    return UPDATE
+    return UPDATE #переход к следующему методу
 
-async def set_update_age(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_age = int(update.message.text)
+async def set_update_age(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    user_age = int(update.message.text) #копирование сообщения пользователя
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(age = user_age) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -49,15 +49,15 @@ async def set_update_age(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_name(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_name(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления имени в анкете
     await context.bot.send_message(chat_id=update.effective_chat.id,text="Как вас зовут?")
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_name = update.message.text
+async def set_update_name(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    user_name = update.message.text #копирование сообщения пользователя
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(name = user_name) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -69,15 +69,15 @@ async def set_update_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_faculty(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_faculty(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления данных анкеты о факультете
     await context.bot.send_message(chat_id=update.effective_chat.id,text="На каком факультете вы учитесь?")
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_faculty(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_faculty = update.message.text
+async def set_update_faculty(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    user_faculty = update.message.text #копирование сообщения пользователя
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(faculty = user_faculty) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -89,9 +89,9 @@ async def set_update_faculty(update: Update, context: ContextTypes.DEFAULT_TYPE)
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_networking(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_networking(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения тега "нетворкинг"
     reply_keyboard = [["ДА","НЕТ"]]
     await update.message.reply_text("Интересует ли вас нетворкинг?",
         reply_markup=ReplyKeyboardMarkup(
@@ -99,10 +99,10 @@ async def update_networking(update: Update,context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_networking(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.text=="ДА":    
+async def set_update_networking(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    if update.message.text=="ДА": #проверка выбранной кнопки 
         user_networking = True
     else:
         user_networking = False
@@ -117,9 +117,9 @@ async def set_update_networking(update: Update, context: ContextTypes.DEFAULT_TY
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_friendship(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_friendship(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения тега "дружба"
     reply_keyboard = [["ДА","НЕТ"]]
     await update.message.reply_text("Ищите ли вы дружбу?",
         reply_markup=ReplyKeyboardMarkup(
@@ -127,9 +127,9 @@ async def update_friendship(update: Update,context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_friendship(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set_update_friendship(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
     if update.message.text=="ДА":    
         user_friendship = True
     else:
@@ -145,9 +145,9 @@ async def set_update_friendship(update: Update, context: ContextTypes.DEFAULT_TY
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_relationship(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_relationship(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения тега "отношения"
     reply_keyboard = [["ДА","НЕТ"]]
     await update.message.reply_text("Интересует ли вас отношения?",
         reply_markup=ReplyKeyboardMarkup(
@@ -155,9 +155,9 @@ async def update_relationship(update: Update,context: ContextTypes.DEFAULT_TYPE)
         ),
     )
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_relationship(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set_update_relationship(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
     if update.message.text=="ДА":    
         user_relationship = True
     else:
@@ -173,9 +173,9 @@ async def set_update_relationship(update: Update, context: ContextTypes.DEFAULT_
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_help(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_help(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения тега "помощь"
     reply_keyboard = [["ДА","НЕТ"]]
     await update.message.reply_text("Нужна ли вам помощь?",
         reply_markup=ReplyKeyboardMarkup(
@@ -183,9 +183,9 @@ async def update_help(update: Update,context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
 
-async def set_update_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set_update_help(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
     if update.message.text=="ДА":    
         user_help = True
     else:
@@ -201,9 +201,9 @@ async def set_update_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_chatting(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_chatting(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления значения тега "общение"
     reply_keyboard = [["ДА","НЕТ"]]
     await update.message.reply_text("Хотите ли вы с кем-нибудь побеседовать?",
         reply_markup=ReplyKeyboardMarkup(
@@ -211,14 +211,13 @@ async def update_chatting(update: Update,context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
     
-async def set_update_chatting(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set_update_chatting(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
     if update.message.text=="ДА":    
         user_chatting = True
     else:
         user_chatting = False
-    engine.connect()
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(networking = user_chatting) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -230,14 +229,14 @@ async def set_update_chatting(update: Update, context: ContextTypes.DEFAULT_TYPE
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_photo(update:Update,context:ContextTypes.DEFAULT_TYPE):
+async def update_photo(update:Update,context:ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления фотографии анкеты
     await context.bot.send_message(chat_id=update.effective_chat.id,text="Пришлите ваше фото")
 
     return UPDATE
 
-async def set_update_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def set_update_photo(update: Update, context: ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
     photo_file = await update.message.photo[-1].get_file()
     photo_path = Path("photo",f'{update.effective_chat.id}.jpg')
     await photo_file.download_to_drive(photo_path)
@@ -253,14 +252,14 @@ async def set_update_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def update_bio(update: Update,context: ContextTypes.DEFAULT_TYPE):
+async def update_bio(update: Update,context: ContextTypes.DEFAULT_TYPE): #метод запускающий диалог обновления данных "о себе"
     await context.bot.send_message(chat_id=update.effective_chat.id,text="Расскажи что-нибудь о себе:)")
-    return UPDATE
+    return UPDATE #переход к следующему методу по плану диалогового окна
     
-async def set_update_bio(update:Update, context:ContextTypes.DEFAULT_TYPE):
-    user_bio = update.message.text
+async def set_update_bio(update:Update, context:ContextTypes.DEFAULT_TYPE): #продолжение вышестоящего метода в виде следующего окна диалога
+    user_bio = update.message.text #копирование сообщения пользователя
     update_query = db.update(members).where(members.columns.tg_chat_id == update.effective_chat.id).values(bio = user_bio) #создание запроса внесения обновленных данных в таблицу
     connection.execute(update_query) #выполнение запроса
     connection.commit() #подтверждение изменений в таблице
@@ -271,9 +270,9 @@ async def set_update_bio(update:Update, context:ContextTypes.DEFAULT_TYPE):
         ),
     )
 
-    return SHOW_FORM
+    return SHOW_FORM #переход к следующему методу по плану диалогового окна
 
-async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
+async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE): #метод показывающий обновленную анкету
     if update.message.text=="НЕТ":    
         pass
     else:
@@ -336,9 +335,9 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
         form=f'Твоя анкета: \n{networking_result} {friendship_result} {relationship_result} {help_result} {chatting_result}\n{name_result},{age_result},{faculty_result}\n {bio_result}'
         
         if name_result=="":
-            await context.bot.send_message(chat_id=update.effective_chat.id,text=form)
+            await context.bot.send_message(chat_id=update.effective_chat.id,text=form) #вывод для пустой анкеты
         else:
-            await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path,caption=form)
+            await context.bot.send_photo(chat_id=update.effective_chat.id,photo=photo_path,caption=form) #вывод для нормальной анкеты
 
     
-    return ConversationHandler.END
+    return ConversationHandler.END #завершение диалога
