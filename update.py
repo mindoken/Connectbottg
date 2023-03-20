@@ -279,33 +279,27 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
     else:
         select_query= db.select( members.columns.name ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         name_result=str(select_result.fetchall()[0][0])
 
         select_query= db.select( members.columns.age ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit() 
         age_result=str(select_result.fetchall()[0][0])
 
         select_query= db.select( members.columns.faculty ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         faculty_result=str(select_result.fetchall()[0][0])
 
         select_query= db.select( members.columns.bio ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         bio_result=str(select_result.fetchall()[0][0])
 
         select_query= db.select( members.columns.photo ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         photo_path=(select_result.fetchall()[0][0])
         photo_path = Path("photo",photo_path) 
 
         select_query= db.select( members.columns.networking ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         if select_result.fetchall()[0][0]==True:
             networking_result="Нетворкинг"
         else:
@@ -313,7 +307,6 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
 
         select_query= db.select( members.columns.friendship ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         if select_result.fetchall()[0][0]==True:
             friendship_result="Дружба"
         else:
@@ -321,7 +314,6 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
 
         select_query= db.select( members.columns.relationship ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         if select_result.fetchall()[0][0]==True:
             relationship_result="Отношения"
         else:
@@ -329,7 +321,6 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
 
         select_query= db.select( members.columns.help ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         if select_result.fetchall()[0][0]==True:
             help_result="Помощь"
         else:
@@ -337,7 +328,6 @@ async def show_update_form(update: Update, context:ContextTypes.DEFAULT_TYPE):
 
         select_query= db.select( members.columns.chatting ).where(members.columns.tg_chat_id == update.effective_chat.id) #создание запроса поиска данных выбранной анкеты
         select_result=connection.execute(select_query) #выполнение запроса
-        connection.commit()
         if select_result.fetchall()[0][0]==True:
             chatting_result="Общение"
         else:
