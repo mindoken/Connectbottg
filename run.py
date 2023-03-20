@@ -172,4 +172,5 @@ def Run():
     application.add_handler(update_photo_handler)
     application.add_handler(search_form_handler)
     application.add_handler(help_handler)
+    application.add_handler(audio_handler)
     application.run_polling()
